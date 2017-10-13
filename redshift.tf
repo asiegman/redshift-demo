@@ -138,6 +138,7 @@ resource "aws_redshift_cluster" "RedshiftCluster" {
   depends_on = ["aws_internet_gateway.gw"]
   cluster_parameter_group_name = "${aws_redshift_parameter_group.RedshiftClusterParameterGroup.id}"
   cluster_subnet_group_name = "${aws_redshift_subnet_group.RedshiftSubnetGroup.id}"
+  skip_final_snapshot = true
 
   vpc_security_group_ids = [
     "${aws_security_group.redshift_in.id}"
