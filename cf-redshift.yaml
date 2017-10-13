@@ -134,17 +134,17 @@ Resources:
             Effect: "Allow"
             Principal:
               Service:
-                - "ec2.amazonaws.com"
+                - "redshift.amazonaws.com"
             Action:
               - "sts:AssumeRole"
-      RoleName: !Join ['', [!Ref ClusterName, "Role"]]
+      RoleName: !Join ['', [!Ref ClusterName, "RedshiftRole"]]
 
   RedshiftIAMPolicy:
     Type: "AWS::IAM::Policy"
     Properties:
       Roles:
         - !Ref RedshiftIAMRole
-      PolicyName: !Join ['', [!Ref ClusterName, "Policy"]]
+      PolicyName: !Join ['', [!Ref ClusterName, "RedshiftPolicy"]]
       PolicyDocument:
         Version: "2012-10-17"
         Statement:
@@ -170,6 +170,8 @@ Resources:
       ClusterSubnetGroupName: !Ref RedshiftClusterSubnetGroup
       PubliclyAccessible: 'true'
       Port: !Ref PortNumber
+      IamRoles:
+        - !GetAtt RedshiftIAMRole.Arn
       Tags:
         - Key: ChargeCode
           Value: !Ref ChargeCode
@@ -273,3 +275,7 @@ Outputs:
   S3BucketARN:
     Description: ARN of the S3 bucket that the redshift cluster has access to
     Value: !GetAtt RedshiftS3Bucket.Arn
+
+  RedshiftIAMRoleARN:
+    Description: You'll need the ARN of the IAM Role for loading data to/from S3
+    Value: !GetAtt RedshiftIAMRole.Arn
