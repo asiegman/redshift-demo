@@ -1,0 +1,7 @@
+.terraform
+variables.tf
+
+# I'm ignoring local tfstate files for quick dev purposes
+# These should be properly managed between team members, usually backended
+# on s3 with version control on the bucket
+*.tfstate*
