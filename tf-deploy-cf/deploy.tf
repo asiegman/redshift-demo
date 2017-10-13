@@ -22,7 +22,7 @@ resource "aws_cloudformation_stack" "redshift" {
     MasterUserPassword = "TotallyInsecurePassword123"
   }
 
-  template_body = "${file("${path.module}/cf-redshift.yaml")}"
+  template_body = "${file("${path.module}/../cf-redshift.yaml")}"
   timeout_in_minutes = 30
   capabilities = ["CAPABILITY_NAMED_IAM"]
   on_failure = "DO_NOTHING"
